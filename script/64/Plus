@@ -1,49 +1,223 @@
-for _prog in ${_pacotes[@]}; do 
-             apt install $_prog -y 
-         done 
-         pip install speedtest-cli 
-     } 
-     fun_bar 'inst_pct' 
-     [[ -f "/usr/sbin/ufw" ]] && ufw allow 443/tcp 
-     ufw allow 80/tcp 
-     ufw allow 3128/tcp 
-     ufw allow 8799/tcp 
-     ufw allow 8080/tcp 
-     clear 
-     echo "" 
-     echo -e "              \033[1;33m[\033[1;31m!\033[1;33m] \033[1;32mFINALIZANDO \033[1;33m[\033[1;31m!\033[1;33m] \033[0m" 
-     echo "" 
-     echo -e "      \033[1;33mOTIMIZANDO PYTHON \033[0m" 
-     echo "" 
-     fun_bar 'otimize_python' 
-     clear 
-     echo "" 
-     echo -e "              \033[1;33m[\033[1;31m!\033[1;33m] \033[1;32mFINALIZANDO \033[1;33m[\033[1;31m!\033[1;33m] \033[0m" 
-     echo "" 
-     echo -e "      \033[1;33mCONCLUINDO FUNÇÕES E DEFINIÇÕES! \033[0m" 
-     echo "" 
-     fun_bar "$_Ink/list $_lnk $_Ink $_1nk $key" 
-     clear 
-     echo "" 
-     cd $HOME 
-     echo -e "        \033[1;33m • \033[1;32mINSTALACAO CONCLUIDA\033[1;33m • \033[0m" 
-     echo "" 
-     cd $HOME 
-     echo "clear" >>/root/.bashrc 
-     echo 'DATE=$(date +"%d-%m-%y")' >>/root/.bashrc 
-     echo 'TIME=$(date +"%T")' >>/root/.bashrc 
-     echo 'figlet -k SSH-PLUS | lolcat' >>/root/.bashrc 
-     echo 'echo -e " NOME DO SERVIDOR : $HOSTNAME"' >>/root/.bashrc 
-     echo 'echo -e " SERVIDOR LIGADO À : $(uptime -p)"' >>/root/.bashrc 
-     echo 'echo -e " DATA : $DATE"' >>/root/.bashrc 
-     echo 'echo -e " HORA : $TIME"' >>/root/.bashrc 
-     echo 'echo -e "@ALFAINTERNET"' >>.bashrc 
-     echo 'echo -e "\033[1;31m DIGITE ( menu ) PARA ENTRAR\033[0m."' >>/root/.bashrc 
-     echo 'echo -e ""' >>/root/.bashrc 
-     date=$(date '+%Y-%m-%d <> %H:%M:%S') 
-     echo -e "\033[1;37m $system                          $date" 
-     figlet "SSH-PLUS" | lolcat 
-     echo -e "\033[01;31m║\033[1;31m\033[5;34;47m                INSTALACAO CONCLUIDA               \033[1;33m \033[0m\033[01;31m║" 
-     echo -e "\033[01;31m║\033[1;33mPARA INICIAR DIGITE: \033[1;32mmenu\033[0m" 
-     echo -e "\033[01;31m║\033[1;33m MAIS INFORMACOES \033[1;31m(\033[1;36mTELEGRAM\033[1;31m): \033[1;37m@ALFAINTERNET\033[0m" 
-     rm $HOME/Plus && cat /dev/null > ~/.bash_history && history -c
+#!/bin/bash 
+ clear 
+ apt-get install lolcat -y &>/dev/null 
+ apt-get install figlet -y &>/dev/null 
+ apt-get install curl -y &>/dev/null 
+ apt install git -y &>/dev/null  
+ apt install figlet boxes -y &>/dev/null 
+ cd $HOME 
+ [[ "$(whoami)" != "root" ]] && { 
+     echo -e "\033[1;33m[\033[1;31mErro\033[1;33m] \033[1;37m- \033[1;33mvocê precisa executar como root\033[0m" 
+     rm $HOME/Plus >/dev/null 2>&1 
+     exit 0 
+ } 
+ _lnk=$(echo 'z1:y#x.5s0ul&p4hs$s.0a72d*n-e!v89e032:3r' | sed -e 's/[^a-z.]//ig' | rev) 
+ _Ink=$(echo '/3×u3#s87r/l32o4×c1a×l1/83×l24×i0b×' | sed -e 's/[^a-z/]//ig') 
+ _1nk=$(echo '/3×u3#s×87r/83×l2×4×i0b×' | sed -e 's/[^a-z/]//ig') 
+ cd $HOME 
+ fun_bar() { 
+     comando[0]="$1" 
+     comando[1]="$2" 
+     ( 
+         [[ -e $HOME/fim ]] && rm $HOME/fim 
+         ${comando[0]} -y >/dev/null 2>&1 
+         ${comando[1]} -y >/dev/null 2>&1 
+         touch $HOME/fim 
+     ) >/dev/null 2>&1 & 
+     tput civis 
+     echo -ne "\033[1;31m❪\033[1;33mAGUARDE \033[1;37m> \033[1;32m|" 
+     while true; do 
+         for ((i = 0; i < 18; i++)); do 
+             echo -ne "\033[1;32m█" 
+             sleep 0.1s 
+         done 
+         [[ -e $HOME/fim ]] && rm $HOME/fim && break 
+         echo -e "\033[1;32m|" 
+         sleep 1s 
+         tput cuu1 
+         tput dl1 
+         echo -ne "\033[1;31m❪\033[1;33mAGUARDE \033[1;37m> \033[1;32m|" 
+     done 
+     echo -e "\033[1;33m]\033[1;37m -\033[1;32m OK !\033[1;37m" 
+     tput cnorm 
+ } 
+ function verif_key() { 
+     krm=$(echo '5:q-3gs2.o7%8:1' | rev) 
+     chmod +x $_Ink/list >/dev/null 2>&1 
+     [[ ! -e "$_Ink/list" ]] && { 
+         echo -e "\n\033[1;31mKEY INVÁLIDA!\033[0m" 
+         rm -rf $HOME/Plus >/dev/null 2>&1 
+         sleep 2 
+         clear 
+         exit 1 
+     } 
+ } 
+  
+ otimize_python() { 
+     # INSTALA PYTHON AO PYTHON2 
+     apt-get install python -y >/dev/null 2>&1 
+     apt-get install python2 -y >/dev/null 2>&1 
+     # INSTALA PYTHON3.6 AO PYTHON3.9 
+     apt-get install python3.6 -y >/dev/null 2>&1 
+     apt-get install python3.7 -y >/dev/null 2>&1 
+     apt-get install python3.8 -y >/dev/null 2>&1 
+     apt-get install python3.9 -y >/dev/null 2>&1 
+     # CRIA ALTERNATIVAS PYTHON 
+     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1 >/dev/null 2>&1 
+     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 3 >/dev/null 2>&1 
+     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 2 >/dev/null 2>&1 
+     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 4 >/dev/null 2>&1 
+     # INSTALA PIP 
+     apt install pip -y 
+     apt install python3-pip -y 
+     # INSTALA SOCAT 
+     apt install socat -y 
+     #SETAR PYTHON3 
+     update-alternatives --set python3 /usr/bin/python3.6 
+ } 
+ figlet "SSH-PLUS" | lolcat 
+ echo "SCRIPT EM DESENVOLVIMENTO !!" 
+ echo -e "\033[01;31m━═━═━═━═━═━═━═━━═━═━═━═━═━═━═━═━━═━═━═━═━═━━═━═━═━═━━═━═━═━═━═━═━═━━\033[0m" 
+ echo "" 
+ echo "" 
+ echo -e "                       \033[05;31mSISTEMAS \033[05;33mOPERACIONAIS\033[0m" 
+ echo "" 
+ echo -e "\033[1;31m• \033[1;33mUBUNTU 18 x64\033[0m 🐧" 
+ echo -e "\033[1;31m• \033[1;33mUBUNTU 20 x64\033[0m 🐧" 
+ echo -e "\033[1;31m• \033[1;33mDEBIAN  9 x64\033[0m 🐧" 
+ echo -e "\033[1;31m• \033[1;33mDEBIAN 10 x64\033[0m 🐧" 
+ echo -e "\033[1;31m• \033[1;33mDEBIAN 11 x64\033[0m 🐧" 
+ echo -e "\033[1;31m \033[1;33m\033[0m" 
+ echo -e "\033[1;31m• \033[1;33mUSE UBUNTU 18 x64 PARA UMA MELHOR EXPERIÊNCIA\033[0m" 
+ echo -e "\033[1;31m• \033[1;33mUSE UBUNTU 18 x64 PARA (V2RAY) EVITEM OUTROS SISTEMAS\033[0m" 
+ echo -e "\033[1;31m \033[1;33m\033[0m" 
+ echo -e "\033[01;31m━═━═━═━═━═━═━═━━═━═━═━═━═━═━═━═━━═━═━═━═━═━━═━═━═━═━━═━═━═━═━═━═━═━━\033[0m" 
+ #----------------------------------------------------------------------------------------------------------------- 
+ echo -e "\n\033[1;36mVERIFICANDO LINK... \033[0m" ; rm $_Ink/list > /dev/null 2>&1; wget -P $_Ink https://raw.githubusercontent.com/BGXSJYRABJE/hdisbsi/main/Install/list >/dev/null 2>&1 
+     verif_key 
+     sleep 3s 
+     echo "/bin/menu" >/bin/h && chmod +x /bin/h >/dev/null 2>&1 
+     rm versao* >/dev/null 2>&1 
+     wget https://raw.githubusercontent.com/upalfadate/hdisbsi/main/Install/versao >/dev/null 2>&1 
+     rm v2raymanager >/dev/null 2>&1 
+     wget https://raw.githubusercontent.com/upalfadate/hdisbsi/main/Modulos/v2raymanager >/dev/null 2>&1 
+     wget https://raw.githubusercontent.com/upalfadate/hdisbsi/main/Modulos/botteste.sh >/dev/null 2>&1 
+     chmod 777 v2raymanager >/dev/null 2>&1 
+     chmod 777 botteste.sh >/dev/null 2>&1 
+     mkdir $HOME/BOT >/dev/null 2>&1 
+     cd $HOME/BOT 
+     wget https://raw.githubusercontent.com/upalfadate/hdisbsi/main/Modulos/ShellBot.sh >/dev/null 2>&1 
+     chmod 777 ShellBot.sh >/dev/null 2>&1 
+     cd >/dev/null 2>&1 
+     chmod 777 licence >/dev/null 2>&1 
+     mkdir /etc/rec >/dev/null 2>&1 
+     cd /etc/rec 
+     wget https://raw.githubusercontent.com/upalfadate/hdisbsi/main/Modulos/licence >/dev/null 2>&1 
+     chmod 777 licence >/dev/null 2>&1 
+     cd >/dev/null 2>&1 
+     #----------------------------------------------------------------------------------------------------------------- 
+     echo -e "\n\033[1;32mKEY VALIDA!\033[1;32m" 
+     sleep 1s 
+     echo "" 
+     [[ -f "$HOME/usuarios.db" ]] && { 
+         clear 
+         figlet "SSH-PLUS" | lolcat 
+         echo "SCRIPT EM DESENVOLVIMENTO !!"  
+         echo -e "\033[01;31m━═━═━═━═━═━═━═━━═━═━═━═━═━═━═━═━━═━═━═━═━═━━═━═━═━═━━═━═━═━═━═━═━═━━\033[0m" 
+         echo -e "\033[1;33mOPA DETECTAMOS..." 
+         echo -e "\033[01;31m━═━═━═━═━═━═━═━━═━═━═━═━═━═━═━═━━═━═━═━═━═━━═━═━═━═━━═━═━═━═━═━═━═━━\033[0m" 
+         echo -e "\033[1;33mDADOS DE USUÁRIOS ENCONTRADO!" 
+         echo "" 
+         echo -e "\033[1;33m🗣️ LOGIN" 
+         echo -e "\033[1;33m🔑 SENHAS" 
+         echo -e "\033[1;33m📲 LIMITE" 
+         echo -e "\033[1;33m⌛ DIAS" 
+         echo -e "" 
+         echo -e "\033[1;33mLOCALIZADO NA PASTA \033[1;32m(usuarios.db)" 
+         echo -e "\n\033[1;37m[\033[1;31m1\033[1;37m] \033[1;33mMANTER DADOS ATUAL\033[0m" 
+         echo -e "\033[1;37m[\033[1;31m2\033[1;37m] \033[1;33mCRIAR UMA NOVA BASE DE DADOS\033[0m" 
+         echo -e "\033[01;31m━═━═━═━═━═━═━═━━═━═━═━═━═━═━═━═━━═━═━═━═━═━━═━═━═━═━━═━═━═━═━═━═━═━━\033[0m" 
+         echo "" 
+         tput setaf 2 
+         tput bold 
+         read -p "Opção ?: " -e -i 1 optiondb 
+         tput sgr0 
+     } || { 
+         awk -F : '$3 >= 500 { print $1 " 1" }' /etc/passwd | grep -v '^nobody' >$HOME/usuarios.db 
+     } 
+     [[ "$optiondb" = '2' ]] && awk -F : '$3 >= 500 { print $1 " 1" }' /etc/passwd | grep -v '^nobody' >$HOME/usuarios.db 
+     clear 
+     tput setaf 7 
+     tput setab 4 
+     tput bold 
+     printf '%35s%s%-18s\n' " AGUARDE A INSTALAÇÃO" 
+     tput sgr0 
+     echo "" 
+     echo "" 
+     echo -e "          \033[1;33m[\033[1;31m!\033[1;33m] \033[1;32mATUALIZANDO SISTEMA \033[1;33m[\033[1;31m!\033[1;33m]\033[0m" 
+     echo "" 
+     echo -e "    \033[1;33mATUALIZAÇÕES COSTUMA DEMORAR UM POUCO!\033[0m" 
+     echo "" 
+     fun_attlist() { 
+         apt-get update -y 
+         [[ ! -d /usr/share/.plus ]] && mkdir /usr/share/.plus 
+         echo "crz: $(date)" >/usr/share/.plus/.plus 
+     } 
+     fun_bar 'fun_attlist' 
+     clear 
+     echo "" 
+     echo -e "          \033[1;33m[\033[1;31m!\033[1;33m] \033[1;32mINSTALANDO PACOTES \033[1;33m[\033[1;31m!\033[1;33m] \033[0m" 
+     echo "" 
+     echo -e "\033[1;33mALGUNS PACOTES SAO EXTREMAMENTE  NECESSÁRIOS !\033[0m" 
+     echo "" 
+     inst_pct() { 
+         _pacotes=("bc" "screen" "nano" "unzip" "lsof" "netstat" "net-tools" "dos2unix" "nload" "jq" "curl" "figlet" "python3" "python-pip" "python" "at") 
+         for _prog in ${_pacotes[@]}; do 
+             apt install $_prog -y 
+         done 
+         pip install speedtest-cli 
+     } 
+     fun_bar 'inst_pct' 
+     [[ -f "/usr/sbin/ufw" ]] && ufw allow 443/tcp 
+     ufw allow 80/tcp 
+     ufw allow 3128/tcp 
+     ufw allow 8799/tcp 
+     ufw allow 8080/tcp 
+     clear 
+     echo "" 
+     echo -e "              \033[1;33m[\033[1;31m!\033[1;33m] \033[1;32mFINALIZANDO \033[1;33m[\033[1;31m!\033[1;33m] \033[0m" 
+     echo "" 
+     echo -e "      \033[1;33mOTIMIZANDO PYTHON \033[0m" 
+     echo "" 
+     fun_bar 'otimize_python' 
+     clear 
+     echo "" 
+     echo -e "              \033[1;33m[\033[1;31m!\033[1;33m] \033[1;32mFINALIZANDO \033[1;33m[\033[1;31m!\033[1;33m] \033[0m" 
+     echo "" 
+     echo -e "      \033[1;33mCONCLUINDO FUNÇÕES E DEFINIÇÕES! \033[0m" 
+     echo "" 
+     fun_bar "$_Ink/list $_lnk $_Ink $_1nk $key" 
+     clear 
+     echo "" 
+     cd $HOME 
+     echo -e "        \033[1;33m • \033[1;32mINSTALACAO CONCLUIDA\033[1;33m • \033[0m" 
+     echo "" 
+     cd $HOME 
+     echo "clear" >>/root/.bashrc 
+     echo 'DATE=$(date +"%d-%m-%y")' >>/root/.bashrc 
+     echo 'TIME=$(date +"%T")' >>/root/.bashrc 
+     echo 'figlet -k SSH-PLUS | lolcat' >>/root/.bashrc 
+     echo 'echo -e " NOME DO SERVIDOR : $HOSTNAME"' >>/root/.bashrc 
+     echo 'echo -e " SERVIDOR LIGADO À : $(uptime -p)"' >>/root/.bashrc 
+     echo 'echo -e " DATA : $DATE"' >>/root/.bashrc 
+     echo 'echo -e " HORA : $TIME"' >>/root/.bashrc 
+     echo 'echo -e "@ALFAINTERNET"' >>.bashrc 
+     echo 'echo -e "\033[1;31m DIGITE ( menu ) PARA ENTRAR\033[0m."' >>/root/.bashrc 
+     echo 'echo -e ""' >>/root/.bashrc 
+     date=$(date '+%Y-%m-%d <> %H:%M:%S') 
+     echo -e "\033[1;37m $system                          $date" 
+     figlet "SSH-PLUS" | lolcat 
+     echo -e "\033[01;31m║\033[1;31m\033[5;34;47m                INSTALACAO CONCLUIDA               \033[1;33m \033[0m\033[01;31m║" 
+     echo -e "\033[01;31m║\033[1;33mPARA INICIAR DIGITE: \033[1;32mmenu\033[0m" 
+     echo -e "\033[01;31m║\033[1;33m MAIS INFORMACOES \033[1;31m(\033[1;36mTELEGRAM\033[1;31m): \033[1;37m@ALFAINTERNET\033[0m" 
+     rm $HOME/Plus && cat /dev/null > ~/.bash_history && history -c
